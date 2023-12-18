@@ -57,15 +57,15 @@ int hh;
 int mm;
 int ss;
 
-String ehh;
-String emm;
-String ess;
+String ehh;  // hours as a String
+String emm;  // minutes as a String
+String ess;  // seconds as a String
 
 int prevhh;
 int prevmm;
 int prevss;
 
-// Time Colors
+// Time Digit Colors
 int clrRed = 0;
 int clrBlu = 100;
 int clrGrn = 0;
@@ -99,11 +99,12 @@ Digit digit3(&display, 0, 63 - 4 - 9 * 4, 8, display.color565(clrRed, clrGrn, cl
 Digit digit4(&display, 0, 63 - 7 - 9 * 5, 8, display.color565(clrRed, clrGrn, clrBlu));
 Digit digit5(&display, 0, 63 - 7 - 9 * 6, 8, display.color565(clrRed, clrGrn, clrBlu));
 
+// Set and enable the display updater timer
 void display_update_enable(bool is_enable) {
   if (is_enable) {
     timer = timerBegin(0, 80, true);
-    timerAttachInterrupt(timer, &display_updater, true);
-    timerAlarmWrite(timer, 2000, true);
+    timerAttachInterrupt(timer, &display_updater, true);  // Points the timer interrupt to the display "updater" routine.
+    timerAlarmWrite(timer, 2000, true);                   // triggers the timer every 2 seconds (2000 mili seconds)
     timerAlarmEnable(timer);
   } else {
     timerDetachInterrupt(timer);
@@ -111,7 +112,6 @@ void display_update_enable(bool is_enable) {
   }
 }
 
-//int epoch = 1;
 unsigned long prevEpoch = 0;
 
 // <-------------------------------------- Begin Setup ----------------------------
@@ -123,7 +123,7 @@ void setup() {
   Serial.print("Connecting");
 
   //connect to wifi network
-  WiFi.begin(wifi_ssid, wifi_pass);
+  WiFi.begin(wifi_ssid, wifi_pass);  // WiFi user and passwords kept in params.h
   WiFi.mode(WIFI_STA);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -152,7 +152,8 @@ void setup() {
   //delay(3000);
   //display_update_enable(false);
   //display.clearDisplay();
-  display_update_enable(true);
+
+  display_update_enable(true);  // Enables the display update timer interrupt routine.
 
 
 
@@ -194,7 +195,7 @@ void setup() {
   digit1.DrawColon(display.color565(clrRed, clrGrn, clrBlu));
   digit3.DrawColon(display.color565(clrRed, clrGrn, clrBlu));
 
-}  // <------------------------------ End Setup -------------------------------------
+}  // <------------------------------ End Setup -----------------------------------------
 
 //  <----------------------------------- Begin Loop -------------------------------------
 
@@ -209,19 +210,19 @@ void loop() {
   //delay(3000);
   //display_update_enable(false);
 
-  unsigned long epoch = myTZ.now();
+  unsigned long epoch = myTZ.now(); // gets the "epoch" number from exTime 
 
-  String TimeHolder = myTZ.dateTime("H:i:s");
+  String TimeHolder = myTZ.dateTime("H:i:s"); // gets the current time from ezTime
   //int colonPosition = TimeHolder.indexOf(':');
-  ehh = TimeHolder.charAt(0);
-  ehh += TimeHolder.charAt(1);
-  hh = ehh.toInt();
-  emm = TimeHolder.charAt(3);
-  emm += TimeHolder.charAt(4);
-  mm = emm.toInt();
-  ess = TimeHolder.charAt(6);
-  ess += TimeHolder.charAt(7);
-  ss = ess.toInt();
+  ehh = TimeHolder.charAt(0); // Extracts the first digit of the hour
+  ehh += TimeHolder.charAt(1); // Extracts the second digit of the hour
+  hh = ehh.toInt();            // The extracted digits are in string format so convert it to int
+  emm = TimeHolder.charAt(3); // Extracts the first digit of the minute
+  emm += TimeHolder.charAt(4); // Extracts the second digit of the minute
+  mm = emm.toInt();            // The extracted digits are in string format so convert it to int
+  ess = TimeHolder.charAt(6); // Extracts the first digit of the second
+  ess += TimeHolder.charAt(7); // Extracts the second digit of the second
+  ss = ess.toInt();            // The extracted digits are in string format so convert it to int
 
   /*Serial.println(TimeHolder);
   Serial.println(hh + ":" + mm + ":" + ss);
@@ -229,7 +230,7 @@ void loop() {
   display.print(hh + ":" + mm + ":" + ss);
   display_update_enable(true);*/
 
-  if (epoch != prevEpoch) {
+  if (epoch != prevEpoch) { // waits for the time to change
 
     if (prevEpoch == 0) {  // If we didn't have a previous time. Just draw it without morphing.
       Serial.println("Reached first time display");
@@ -242,7 +243,7 @@ void loop() {
     }
 
     else {
-      // epoch changes every miliseconds, we only want to draw when digits actually change.
+      // epoch changes every milisecond, we only want to draw when digits actually change.
       if (ss != prevss) {
         int s0 = ss % 10;
         int s1 = ss / 10;
