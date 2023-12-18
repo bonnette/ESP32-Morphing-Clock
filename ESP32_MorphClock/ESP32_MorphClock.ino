@@ -111,8 +111,8 @@ void display_update_enable(bool is_enable) {
   }
 }
 
-int epoch = 1;
-int prevEpoch = 0;
+//int epoch = 1;
+unsigned long prevEpoch = 0;
 
 // <-------------------------------------- Begin Setup ----------------------------
 void setup() {
@@ -209,6 +209,8 @@ void loop() {
   //delay(3000);
   //display_update_enable(false);
 
+  unsigned long epoch = myTZ.now();
+
   String TimeHolder = myTZ.dateTime("H:i:s");
   //int colonPosition = TimeHolder.indexOf(':');
   ehh = TimeHolder.charAt(0);
@@ -265,18 +267,6 @@ void loop() {
         prevhh = hh;
       }
     }
+    prevEpoch = epoch;
   }
-
-
-  epoch++;
-  //Serial.println(epoch);
-  if (epoch >= 1000) {
-    epoch = 2;
-    prevEpoch = 1;
-    //Serial.println("Adjusted epoch");
-  }
-  prevEpoch = epoch + 1;
-
-
-
 }  // <-------------------------- End Loop ----------------------------------------
