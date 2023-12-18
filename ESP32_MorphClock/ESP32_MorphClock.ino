@@ -10,6 +10,15 @@
 / https://www.instructables.com/Morphing-Digital-Clock/
 /--------------------------------------------------------------------*/
 
+// From original Hari Wiguna repository
+// Morphing Clock by Hari Wiguna, July 2018
+//
+// Thanks to:
+// Dominic Buchstaller for PxMatrix
+// Tzapu for WifiManager
+// Stephen Denne aka Datacute for DoubleResetDetector
+// Brian Lough aka WitnessMeNow for tutorials on the matrix and WifiManager
+
 
 // This is how many color levels the display shows - the more the slower the update
 //#define PxMATRIX_COLOR_DEPTH 4
