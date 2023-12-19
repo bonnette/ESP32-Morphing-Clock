@@ -1,14 +1,14 @@
-/*--------------------------------------------------------------------
+/*-----------------------------------------------------------------
 / Larry Bonnette December 2023
 /
 / Morphing Clock with PxMatrix library using My PCB and 
-/ WEMOS D1 MINI ESP32. My PCB is uses wiring from PxMatrix library page
-/ https://github.com/2dom/PxMatrix 
-/ Time sync uses the ezTime library, instead of NTP
-/ https://github.com/ropg/ezTime
-/ and the morphing library by HariFun
+/ WEMOS D1 MINI ESP32 clone. My PCB uses wiring from the 
+/ PxMatrix library page https://github.com/2dom/PxMatrix 
+/ The base code is from pixeltime.ino from the PxMatrix library.
+/ Time sync uses the ezTime library, https://github.com/ropg/ezTime
+/ The morphing code is from the morphing clock repository by Hari Wiguna
 / https://www.instructables.com/Morphing-Digital-Clock/
-/--------------------------------------------------------------------*/
+/-----------------------------------------------------------------*/
 
 // From original Hari Wiguna repository
 // Morphing Clock by Hari Wiguna, July 2018
